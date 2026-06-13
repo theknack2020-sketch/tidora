@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tidora — Swipe Photo Cleaner</title>
+  <meta name="description" content="Your camera roll, finally light. Swipe through old months, keep the gems, clear the rest — a few minutes a day. No ads. No uploads. 100% on-device." />
+  <style>
+    :root {
+      --mint: #34C79A;
+      --sky: #5AB8E8;
+      --mint-dim: #2aaa82;
+      --bg: #ffffff;
+      --surface: #f7fdfb;
+      --surface2: #eef9f5;
+      --border: #e2f4ed;
+      --text: #1a2e25;
+      --muted: #557060;
+      --link: #34C79A;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1f18;
+        --surface: #162b20;
+        --surface2: #1a3325;
+        --border: #1e3d2c;
+        --text: #e0f5ec;
+        --muted: #8ab8a2;
+        --link: #4ed4a8;
+        --mint-dim: #4ed4a8;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.55rem;
+      font-size: 1.1rem; font-weight: 700; color: var(--mint);
+    }
+    .nav-brand svg { width: 28px; height: 28px; }
+    .nav-links { display: flex; gap: 1.4rem; font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--mint); text-decoration: none; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 4rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .hero-icon {
+      margin: 0 auto 2rem;
+      width: 96px; height: 96px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--mint), var(--sky));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.25rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: #000;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero-cta { background: #fff; color: #000; }
+    }
+    .hero-cta:hover { opacity: 0.85; text-decoration: none; }
+    .hero-cta svg { width: 20px; height: 20px; }
+    .hero-sub { margin-top: 0.85rem; font-size: 0.85rem; color: var(--muted); }
+    /* PLACEHOLDER: replace href="#" with real App Store URL after submission */
+
+    /* ── CARD DEMO ── */
+    .demo-area {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: -12px;
+      margin: 0 auto 5rem;
+      position: relative;
+      height: 200px;
+      max-width: 360px;
+    }
+    .demo-card {
+      width: 130px; height: 170px;
+      border-radius: 16px;
+      position: absolute;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .demo-card-back {
+      background: linear-gradient(135deg, #b2f0da, #c9eaf8);
+      transform: rotate(-6deg) translateX(-55px) translateY(10px);
+    }
+    .demo-card-mid {
+      background: linear-gradient(135deg, #5AB8E8, #34C79A);
+      transform: rotate(2deg) translateX(0px) translateY(0px);
+      z-index: 1;
+    }
+    .demo-card-front {
+      background: linear-gradient(135deg, #34C79A, #2aaa82);
+      transform: rotate(-1deg) translateX(60px) translateY(-5px);
+      z-index: 2;
+    }
+    /* swipe trail */
+    .demo-trail {
+      position: absolute;
+      right: 14px; top: 30px;
+      z-index: 3;
+    }
+    @media (prefers-color-scheme: dark) {
+      .demo-card-back { background: linear-gradient(135deg, #1d5c42, #1a4a5e); }
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--surface);
+      padding: 4rem 1.5rem;
+    }
+    .features-inner { max-width: 720px; margin: 0 auto; }
+    .features h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 2.5rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.25rem;
+    }
+    .feature-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.65rem;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── PRIVACY BAND ── */
+    .privacy-band {
+      background: linear-gradient(135deg, var(--mint) 0%, var(--sky) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+    }
+    .privacy-band h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .privacy-band p {
+      font-size: 1rem;
+      opacity: 0.92;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .privacy-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .pill {
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 0.45rem;
+      font-weight: 700; color: var(--mint); font-size: 1rem;
+    }
+    .footer-brand svg { width: 22px; height: 22px; }
+    .footer-links {
+      display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;
+    }
+    .footer-links a { color: var(--muted); font-size: 0.85rem; }
+    .footer-links a:hover { color: var(--mint); }
+    .footer-copy { font-size: 0.82rem; }
+
+    @media (max-width: 480px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1rem; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 360px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="6" width="20" height="22" rx="3" fill="#34C79A" opacity="0.18"/>
+        <rect x="7" y="9" width="17" height="17" rx="2" fill="#34C79A" opacity="0.35"/>
+        <rect x="9" y="11" width="13" height="13" rx="2" fill="#5AB8E8" opacity="0.6"/>
+        <path d="M22 18 Q28 14 26 22" stroke="#34C79A" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="26" cy="22" r="1.5" fill="#34C79A"/>
+      </svg>
+      Tidora
+    </div>
+    <div class="nav-links">
+      <a href="support.html">Support</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- App icon SVG -->
+    <svg class="hero-icon" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="96" height="96" rx="22" fill="url(#icon-grad)"/>
+      <defs>
+        <linearGradient id="icon-grad" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#34C79A"/>
+          <stop offset="100%" stop-color="#5AB8E8"/>
+        </linearGradient>
+      </defs>
+      <!-- photo card stack -->
+      <rect x="18" y="26" width="44" height="52" rx="7" fill="white" opacity="0.25" transform="rotate(-8 18 26)"/>
+      <rect x="22" y="24" width="44" height="52" rx="7" fill="white" opacity="0.45" transform="rotate(-3 22 24)"/>
+      <rect x="26" y="22" width="44" height="52" rx="7" fill="white" opacity="0.9"/>
+      <!-- landscape scene in card -->
+      <rect x="30" y="28" width="36" height="22" rx="3" fill="#b2f0da"/>
+      <ellipse cx="44" cy="38" rx="7" ry="7" fill="#5AB8E8" opacity="0.7"/>
+      <rect x="30" y="46" width="36" height="4" rx="2" fill="#34C79A" opacity="0.5"/>
+      <!-- swipe arrow trail -->
+      <path d="M60 48 Q74 38 70 56" stroke="#34C79A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <circle cx="70" cy="56" r="3.5" fill="#34C79A"/>
+    </svg>
+
+    <h1>Your camera roll,<br/><em>finally light.</em></h1>
+    <p>Swipe through old months, keep the gems, clear the rest — a few satisfying minutes a day.</p>
+
+    <!-- PLACEHOLDER: replace href="#" with App Store URL after submission -->
+    <a class="hero-cta" href="#" aria-label="Download on the App Store">
+      <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14.25 10.75c-.02-2.02 1.65-3 1.72-3.04-0.94-1.37-2.39-1.56-2.91-1.58-1.24-.12-2.43.73-3.06.73-.63 0-1.6-.71-2.63-.69-1.35.02-2.6.79-3.29 2-1.41 2.44-.36 6.05 1.01 8.03.67.97 1.47 2.05 2.52 2.01 1.01-.04 1.4-.65 2.63-.65 1.22 0 1.57.65 2.64.63 1.09-.02 1.78-.98 2.44-1.96.77-1.12 1.09-2.21 1.1-2.27-.02-.01-2.14-.82-2.17-3.21z"/>
+        <path d="M12.37 5.05c.56-.68.94-1.62.83-2.55-.81.03-1.78.54-2.36 1.21-.52.6-.97 1.56-.85 2.48.9.07 1.81-.46 2.38-1.14z"/>
+      </svg>
+      Download on the App Store
+    </a>
+    <p class="hero-sub">Free to download · No ads · No accounts</p>
+  </section>
+
+  <!-- CARD DEMO VISUAL -->
+  <div class="demo-area" aria-hidden="true">
+    <div class="demo-card demo-card-back"></div>
+    <div class="demo-card demo-card-mid"></div>
+    <div class="demo-card demo-card-front"></div>
+    <svg class="demo-trail" width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 44 Q28 10 42 18" stroke="#34C79A" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="5 3" opacity="0.7"/>
+      <circle cx="42" cy="18" r="5" fill="#34C79A" opacity="0.85"/>
+    </svg>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="features-inner">
+      <h2>Everything you need, nothing you don't.</h2>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <span class="feature-icon">👆</span>
+          <h3>Swipe to Clean</h3>
+          <p>Left to delete, right to keep. Physics-based cards make every swipe feel satisfying.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">📅</span>
+          <h3>Month by Month</h3>
+          <p>Work through your library one month at a time. Watch months turn green as you clear them.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🧹</span>
+          <h3>Smart Sweeps</h3>
+          <p>On-device AI groups duplicates and picks the best shot. Screenshots and large files get their own sweep.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🚫</span>
+          <h3>No Ads. Ever.</h3>
+          <p>Not in the free tier, not in Pro. No ad SDKs, no banners, no sponsored content. Period.</p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-icon">🔒</span>
+          <h3>On-Device Privacy</h3>
+          <p>Your photos never leave your iPhone. No uploads, no accounts, no tracking. All processing runs locally.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY BAND -->
+  <section class="privacy-band">
+    <h2>Privacy isn't a feature. It's the foundation.</h2>
+    <p>Tidora reads your library to show you photos — and that's where it stays. On your device. Under your control.</p>
+    <div class="privacy-pills">
+      <span class="pill">No uploads</span>
+      <span class="pill">No accounts</span>
+      <span class="pill">No IDFA</span>
+      <span class="pill">No ads</span>
+      <span class="pill">No cloud sync</span>
+      <span class="pill">NSPrivacyTracking = false</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="20" height="22" rx="3" fill="#34C79A" opacity="0.18"/>
+          <rect x="7" y="9" width="17" height="17" rx="2" fill="#34C79A" opacity="0.35"/>
+          <rect x="9" y="11" width="13" height="13" rx="2" fill="#5AB8E8" opacity="0.6"/>
+          <path d="M22 18 Q28 14 26 22" stroke="#34C79A" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="26" cy="22" r="1.5" fill="#34C79A"/>
+        </svg>
+        Tidora
+      </div>
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="support.html">Support</a>
+        <a href="mailto:tidora.support@theknack.dev">Contact</a>
+      </div>
+      <p class="footer-copy">© 2026 TheKnack. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

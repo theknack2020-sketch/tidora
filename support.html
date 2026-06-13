@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Tidora</title>
+  <style>
+    :root {
+      --mint: #34C79A;
+      --sky: #5AB8E8;
+      --bg: #ffffff;
+      --surface: #f7fdfb;
+      --border: #e2f4ed;
+      --text: #1a2e25;
+      --muted: #557060;
+      --link: #34C79A;
+      --warn-bg: #fff8f0;
+      --warn-border: #f0a060;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1f18;
+        --surface: #162b20;
+        --border: #1e3d2c;
+        --text: #e0f5ec;
+        --muted: #8ab8a2;
+        --link: #4ed4a8;
+        --warn-bg: #2a1f10;
+        --warn-border: #b06030;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 2rem 1.25rem 4rem;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    header { text-align: center; padding: 2.5rem 0 2rem; }
+    .logo-mark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 1.4rem; font-weight: 700; color: var(--mint); text-decoration: none;
+    }
+    .logo-mark svg { width: 32px; height: 32px; }
+    h1 { font-size: 1.75rem; font-weight: 700; margin: 1rem 0 0.25rem; }
+    .tagline { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; }
+    h2 {
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--mint);
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+    /* FAQ accordion */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 0.65rem;
+      overflow: hidden;
+    }
+    summary {
+      padding: 0.9rem 1.1rem;
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface);
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      font-size: 1.2rem;
+      color: var(--mint);
+      flex-shrink: 0;
+      margin-left: 1rem;
+      transition: transform 0.2s;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    details[open] summary { border-bottom: 1px solid var(--border); }
+    .faq-body {
+      padding: 1rem 1.1rem 1.1rem;
+      font-size: 0.97rem;
+    }
+    .faq-body p { margin-bottom: 0.7rem; }
+    .faq-body p:last-child { margin-bottom: 0; }
+    .faq-body ul { margin: 0.4rem 0 0.7rem 1.4rem; }
+    .faq-body li { margin-bottom: 0.3rem; }
+    /* Troubleshooting */
+    .trouble-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .trouble-card h3 {
+      font-size: 0.97rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .trouble-card p, .trouble-card li { font-size: 0.95rem; }
+    .trouble-card ul { margin: 0.3rem 0 0 1.3rem; }
+    .warning {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-left: 4px solid var(--warn-border);
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin: 0.6rem 0 0;
+      font-size: 0.93rem;
+    }
+    /* Contact box */
+    .contact-box {
+      background: linear-gradient(135deg, #34C79A18, #5AB8E818);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .contact-box h2 { border: none; margin-top: 0; padding: 0; }
+    .contact-box p { color: var(--muted); margin-bottom: 1rem; }
+    .contact-btn {
+      display: inline-block;
+      background: var(--mint);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.75rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .contact-btn:hover { opacity: 0.88; text-decoration: none; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer nav { margin-top: 0.75rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    footer nav a { color: var(--link); font-size: 0.85rem; }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.4rem; }
+      body { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="logo-mark" href="index.html">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="6" width="20" height="22" rx="3" fill="#34C79A" opacity="0.18"/>
+        <rect x="7" y="9" width="17" height="17" rx="2" fill="#34C79A" opacity="0.35"/>
+        <rect x="9" y="11" width="13" height="13" rx="2" fill="#5AB8E8" opacity="0.6"/>
+        <path d="M22 18 Q28 14 26 22" stroke="#34C79A" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="26" cy="22" r="1.5" fill="#34C79A"/>
+      </svg>
+      Tidora
+    </a>
+    <h1>Support &amp; FAQ</h1>
+    <p class="tagline">Tidora: Swipe Photo Cleaner</p>
+  </header>
+
+  <!-- SECTION: How the App Works -->
+  <h2>How the App Works</h2>
+
+  <details>
+    <summary>How does swiping work?</summary>
+    <div class="faq-body">
+      <p>Tidora shows your photos one at a time as cards. Swipe <strong>left to delete</strong>, <strong>right to keep</strong>, or <strong>swipe up to favorite</strong> (adds to your iOS Favorites album — a power gesture you can enable in Settings).</p>
+      <p>Your delete decisions are held in a basket until the end of the round. Nothing is deleted until you review the basket and tap <strong>Confirm Delete</strong>. You stay in control at every step.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Can I undo a swipe?</summary>
+    <div class="faq-body">
+      <p>Yes. Tap the <strong>Undo button</strong> (↩) during a round to return the last card to the queue. Free users can undo within the current session. <strong>Pro users</strong> get unlimited undo history — you can step back through an entire round.</p>
+      <p>At the end of every round you also see a full <strong>review grid</strong> of all items in the delete basket, so you can remove anything before confirming.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How does batch delete work?</summary>
+    <div class="faq-body">
+      <p>As you swipe left, deleted items are collected silently into a basket — there's no interruption mid-round. When the round ends, Tidora shows you a summary screen with a grid of everything in the basket. You can:</p>
+      <ul>
+        <li>Tap any photo in the grid to remove it from the basket (put it back to "keep")</li>
+        <li>Tap <strong>Confirm Delete</strong> to move the whole basket to iOS Recently Deleted</li>
+        <li>Tap <strong>Cancel</strong> to keep everything and start fresh</li>
+      </ul>
+      <p>The actual deletion happens only when you tap Confirm Delete.</p>
+    </div>
+  </details>
+
+  <details open>
+    <summary>I deleted photos but my storage didn't free up — why?</summary>
+    <div class="faq-body">
+      <p>When Tidora deletes photos, iOS moves them to the <strong>Recently Deleted</strong> album inside the Photos app. They stay there for <strong>30 days</strong> before iOS permanently removes them and reclaims the storage.</p>
+      <p>To free storage right away:</p>
+      <ul>
+        <li>Open the <strong>Photos app</strong> on your iPhone</li>
+        <li>Go to <strong>Albums → Recently Deleted</strong></li>
+        <li>Tap <strong>Delete All</strong> (top-left) to permanently remove everything now</li>
+      </ul>
+      <div class="warning">
+        Once you empty Recently Deleted, those photos are gone permanently and cannot be recovered. Tidora shows a reminder about this after every round.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>What's the difference between Free and Pro?</summary>
+    <div class="faq-body">
+      <p><strong>Free tier:</strong> 50 swipes per day (resets at midnight), month-by-month rounds, On This Day rounds, Screenshots sweep, Large Files sweep, undo within a session.</p>
+      <p><strong>Pro tier:</strong> Unlimited swipes, full Smart Sweeps (duplicates + keep-the-best), unlimited undo history, advanced stats and decision speed/ratio personality, win-back offer eligibility.</p>
+      <p>No ads in either tier — ever.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What is the daily swipe limit?</summary>
+    <div class="faq-body">
+      <p>Free users can swipe <strong>50 photos per day</strong>. The counter resets at midnight local time. Kept photos and undone swipes both count toward the limit. Upgrade to Pro for unlimited swipes.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do I cancel my subscription?</summary>
+    <div class="faq-body">
+      <p>Tidora subscriptions are managed entirely by Apple. To cancel:</p>
+      <ul>
+        <li>Open <strong>Settings</strong> on your iPhone → tap your name → <strong>Subscriptions</strong></li>
+        <li>Find <strong>Tidora Pro</strong> and tap <strong>Cancel Subscription</strong></li>
+      </ul>
+      <p>You retain Pro access until the end of the current billing period. TheKnack cannot cancel subscriptions on your behalf.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do I restore a previous purchase?</summary>
+    <div class="faq-body">
+      <p>Open Tidora → go to <strong>Settings</strong> (Me tab) → tap <strong>Restore Purchase</strong>. Make sure you are signed into the same Apple ID you used to purchase. If restore fails, check your internet connection and try again.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How does the duplicates / keep-the-best feature work?</summary>
+    <div class="faq-body">
+      <p>Tidora's Smart Sweeps (Pro) scans for visually similar photos using on-device Vision analysis — no photos leave your device. Similar photos are grouped into a single card. Tidora scores each photo on sharpness, exposure, and whether eyes are open, then suggests the best one to keep. You can override the suggestion before sending the rest to the basket.</p>
+      <p>The analysis runs progressively in the background while the app is open; the Smart Sweeps tab shows a progress indicator as it fills.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What about iCloud Photos "Optimize Storage"?</summary>
+    <div class="faq-body">
+      <p>If you use iCloud Photos with <strong>Optimize iPhone Storage</strong> enabled, your device may hold low-resolution thumbnails while originals live in iCloud. When Tidora shows you a photo to review, it requests the full-resolution version from iCloud if needed (requires Wi-Fi or cellular).</p>
+      <p>When you delete a photo through Tidora, it is removed from your <strong>iCloud Photos library</strong> — which means it disappears from all devices sharing that library (iPhone, iPad, Mac). The deletion does not just free local device storage; it removes the item from the cloud library entirely.</p>
+      <p>Tidora labels the space reclaimed as "library size" and does not make promises about immediate local device-storage recovery, since iCloud Optimize manages local storage automatically.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Is my data private? Does Tidora upload my photos?</summary>
+    <div class="faq-body">
+      <p><strong>No — your photos never leave your device.</strong> All processing (grouping, scoring, Vision analysis) runs entirely on-device. Tidora never uploads photos, thumbnails, filenames, or any photo-derived data to any server.</p>
+      <p>The only data that leaves your device is anonymous, non-linked crash and usage analytics via TelemetryDeck (no IDFA, no personal data). You can turn this off in Settings → Data &amp; Privacy → Analytics.</p>
+      <p>See our full <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Do I need an account?</summary>
+    <div class="faq-body">
+      <p>No. Tidora requires no sign-up, no email, and no account of any kind. Just download and start swiping.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What languages does Tidora support?</summary>
+    <div class="faq-body">
+      <p>Tidora is currently available in <strong>English</strong>. Additional languages may be added in future updates.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Does Tidora work on iPad?</summary>
+    <div class="faq-body">
+      <p>Yes. Tidora is a Universal app and supports iPhone and iPad. On iPad, Tidora uses a split-layout view with a sidebar for navigation and the swipe deck in the main area. Keyboard shortcuts are also supported: <strong>← arrow key to delete</strong>, <strong>→ arrow key to keep</strong>.</p>
+    </div>
+  </details>
+
+  <!-- SECTION: Troubleshooting -->
+  <h2>Troubleshooting</h2>
+
+  <div class="trouble-card">
+    <h3>Photo permission denied — app shows no photos</h3>
+    <p>Tidora needs access to your photo library to work. If you denied permission at first launch:</p>
+    <ul>
+      <li>Open <strong>Settings → Privacy &amp; Security → Photos</strong></li>
+      <li>Find <strong>Tidora</strong> and select <strong>All Photos</strong></li>
+      <li>Return to Tidora — it will load your library automatically</li>
+    </ul>
+    <p>Limited Photos access (selected photos only) reduces what Tidora can show you. Full access is recommended for the best experience.</p>
+  </div>
+
+  <div class="trouble-card">
+    <h3>App feels slow or stuttery on a very large library</h3>
+    <p>Tidora is designed for libraries up to 100K+ assets, but initial indexing can take a moment on first launch. The month map and first round should appear within seconds. Smart Sweeps analysis runs in the background and fills progressively — a "Preparing…" badge shows progress. If the app feels sluggish:</p>
+    <ul>
+      <li>Force-quit and relaunch Tidora (double-tap Home or swipe up → swipe the app away)</li>
+      <li>Make sure your device has at least a few hundred MB of free storage for temporary processing</li>
+      <li>On older devices, Smart Sweeps analysis may take longer — this is normal</li>
+    </ul>
+  </div>
+
+  <div class="trouble-card">
+    <h3>Video won't preview in the card</h3>
+    <p>Tidora auto-plays a silent 3-second loop of videos in the card view. If a video shows a static thumbnail instead:</p>
+    <ul>
+      <li>Check that the video is fully downloaded from iCloud (look for a cloud icon — tap it to download)</li>
+      <li>Ensure you have a network connection if iCloud Optimize Storage is on</li>
+      <li>If the video is in a format not supported by iOS (rare), the static thumbnail is a fallback</li>
+    </ul>
+  </div>
+
+  <div class="trouble-card">
+    <h3>A photo looks different in Tidora than in the Photos app</h3>
+    <p>Tidora displays the original captured image. If you applied edits in the Photos app (crop, filters, adjustments), Tidora shows the original — not the edited version — for an accurate quality assessment. Deletions always act on the original + edits together (iOS deletes the full asset).</p>
+  </div>
+
+  <div class="trouble-card">
+    <h3>Daily reminder notifications aren't firing</h3>
+    <p>Tidora uses local notifications for daily sweep reminders. If you're not receiving them:</p>
+    <ul>
+      <li>Open <strong>Settings → Notifications → Tidora</strong> and confirm notifications are allowed</li>
+      <li>Check that <strong>Focus / Do Not Disturb</strong> is not blocking the notification</li>
+      <li>Inside Tidora, go to <strong>Settings → Reminder</strong> and confirm the time is set correctly</li>
+      <li>Toggle the reminder off and back on to re-schedule it</li>
+    </ul>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact-box">
+    <h2>Still need help?</h2>
+    <p>We read every email and usually reply within 1–2 business days.</p>
+    <a class="contact-btn" href="mailto:tidora.support@theknack.dev">Email Support</a>
+    <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">tidora.support@theknack.dev</p>
+  </div>
+
+  <footer>
+    <p>© 2026 TheKnack. All rights reserved.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </footer>
+
+</div>
+</body>
+</html>
