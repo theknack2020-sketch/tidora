@@ -109,7 +109,7 @@
     </a>
     <h1>Privacy Policy</h1>
     <p class="effective">Effective date: June 13, 2026</p>
-    <p class="tagline">Tidora: Swipe Photo Cleaner</p>
+    <p class="tagline">Tidora: Clean Photos by Month</p>
   </header>
 
   <div class="hero-banner">
@@ -118,7 +118,9 @@
 
   <!-- 1. Introduction -->
   <h2>1. Introduction</h2>
-  <p>This Privacy Policy explains what information Tidora ("the app", "we", "us") accesses, what limited anonymous data is collected for analytics purposes, and what we do not do. Tidora is developed and operated by <strong>TheKnack</strong>.</p>
+  <p>This Privacy Policy explains what information Tidora ("the app", "we", "us") accesses on
+     your device, why none of it is collected or transmitted, and what we do not do. Tidora is
+     developed and operated by <strong>TheKnack</strong>.</p>
   <p>By using Tidora, you agree to the practices described in this policy. If you do not agree, please stop using the app and uninstall it.</p>
 
   <!-- 2. What We Access -->
@@ -135,31 +137,27 @@
   </div>
 
   <!-- 3. What We Collect -->
-  <h2>3. What We Collect — Anonymous Analytics Only</h2>
-  <p>Tidora uses <strong>TelemetryDeck</strong> for anonymous, privacy-preserving analytics. This is the only data collection in the app.</p>
+  <h2>3. What We Collect — Nothing</h2>
+  <p>Tidora collects <strong>no data at all</strong>. There is no analytics SDK, no crash
+     reporter, no account system and no server: the app has no way to send us anything.
+     The App Store privacy label for Tidora reads <strong>Data Not Collected</strong>, and
+     the app&rsquo;s bundled privacy manifest declares an empty collection list to match.</p>
+  <p>Earlier versions of Tidora shipped an anonymous analytics SDK (TelemetryDeck). It was
+     <strong>removed entirely in version 2.0</strong>, along with the in-app analytics
+     toggle that used to control it &mdash; there is nothing left to switch off.</p>
 
-  <h3>What TelemetryDeck collects</h3>
-  <ul>
-    <li><strong>Product Interaction</strong> — anonymous usage events such as: app launched, onboarding step completed, photo permission granted or denied, round started, round ended, swipe count (total number only — never which photos), paywall shown, subscription purchased, milestone reached, settings changed.</li>
-    <li><strong>Crash Data</strong> — anonymous crash and error reports to help us fix bugs.</li>
-  </ul>
-
-  <h3>What TelemetryDeck does NOT collect</h3>
+  <h3>Specifically, Tidora does not collect</h3>
   <ul class="no-list">
     <li>No photos, filenames, or any photo content</li>
+    <li>No usage or product-interaction events</li>
+    <li>No crash or diagnostic reports</li>
     <li>No name, email address, or any contact information</li>
-    <li>No persistent device identifier (no IDFA)</li>
+    <li>No device identifier (no IDFA)</li>
     <li>No location data</li>
-    <li>No data linked to your identity</li>
     <li>No cross-app or cross-website tracking</li>
   </ul>
-
-  <h3>How TelemetryDeck protects privacy</h3>
-  <p>TelemetryDeck is designed specifically to be privacy-first. It uses a double-hashed, salted identifier derived from device signals that resets daily and cannot be used to identify individual users. <strong>NSPrivacyTracking = false</strong> — Tidora does not engage in tracking as defined by Apple's App Tracking Transparency framework. No IDFA is accessed.</p>
-  <p>You can review TelemetryDeck's privacy practices at <a href="https://telemetrydeck.com/privacy/" target="_blank" rel="noopener">telemetrydeck.com/privacy</a>.</p>
-
-  <h3>Analytics opt-out</h3>
-  <p>You can disable TelemetryDeck analytics at any time in <strong>Settings → Data &amp; Privacy → Analytics</strong> within Tidora.</p>
+  <p>Everything Tidora knows &mdash; your months, your progress, your milestones &mdash;
+     is stored on your device and never leaves it.</p>
 
   <!-- 4. What We Do NOT Do -->
   <h2>4. What We Do Not Do</h2>
@@ -197,13 +195,19 @@
   <p>Because Tidora collects no personal data linked to you, most traditional data-subject requests (access, portability, erasure) are structurally satisfied by design — there is no personal data on our servers to access, export, or delete.</p>
 
   <h3>GDPR (EU / EEA Users)</h3>
-  <p>The lawful basis for the anonymous TelemetryDeck analytics is <strong>legitimate interest</strong> (app improvement and crash diagnosis) — the data is anonymous, non-linked, non-tracking, and carries minimal privacy risk. You may opt out via Settings → Data &amp; Privacy at any time. To raise a complaint, you may contact the relevant data protection supervisory authority in your country.</p>
+  <p>Tidora performs no processing of personal data, so no lawful basis under the GDPR is
+     engaged: there is no collection, no transmission and no third-party recipient. Should
+     you wish to raise a complaint regardless, you may contact the data protection
+     supervisory authority in your country.</p>
 
   <h3>CCPA (California Users)</h3>
-  <p>Tidora does not sell personal information. The anonymous analytics data described in Section 3 does not constitute "personal information" under the CCPA as it cannot reasonably be linked to an individual. You have the right to know what is collected — this policy is that disclosure.</p>
+  <p>Tidora does not sell personal information, and it collects none in the first place. You
+     have the right to know what is collected &mdash; this policy is that disclosure, and the
+     answer is nothing.</p>
 
   <h3>Exercising your rights</h3>
-  <p>To opt out of analytics, use Settings → Data &amp; Privacy → Analytics inside the app. To delete all local Tidora data, uninstall the app. For any other inquiry, contact us at <a href="mailto:tidora.support@theknack.dev">tidora.support@theknack.dev</a>.</p>
+  <p>There is no analytics to opt out of. To delete all local Tidora data, uninstall the app.
+     For any other inquiry, contact us at <a href="mailto:theknack2020@gmail.com">theknack2020@gmail.com</a>.</p>
 
   <!-- 9. Third Parties -->
   <h2>9. Third-Party Services</h2>
@@ -212,8 +216,9 @@
   <h3>Apple (StoreKit / App Store)</h3>
   <p>Pro subscriptions and the lifetime purchase are processed by Apple. Apple handles payment information; Tidora never sees your payment details. Apple's privacy policy applies to those transactions: <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">apple.com/legal/privacy</a>. Subscription management is handled entirely in your App Store account settings.</p>
 
-  <h3>TelemetryDeck</h3>
-  <p>Anonymous crash and usage analytics as described in Section 3. Privacy policy: <a href="https://telemetrydeck.com/privacy/" target="_blank" rel="noopener">telemetrydeck.com/privacy</a>. TelemetryDeck is GDPR-compliant and does not use cookies or cross-app tracking.</p>
+  <h3>None</h3>
+  <p>Tidora bundles no third-party SDKs. The only external party involved is Apple, which
+     processes your purchase if you subscribe &mdash; Tidora never sees your payment details.</p>
 
   <p>No other third-party SDKs, analytics providers, ad networks, or data brokers are used.</p>
 
@@ -234,7 +239,7 @@
   <p>Questions, concerns, or requests about this Privacy Policy:</p>
   <div class="callout">
     <strong>TheKnack</strong><br/>
-    Email: <a href="mailto:tidora.support@theknack.dev">tidora.support@theknack.dev</a><br/>
+    Email: <a href="mailto:theknack2020@gmail.com">theknack2020@gmail.com</a><br/>
     <!-- PLACEHOLDER: Mailing address (required if TR consumer law demands a physical address — confirm with legal counsel) -->
     <!-- Address: [YOUR MAILING ADDRESS] -->
   </div>
